@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport2" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel = "stylesheet" href = "./login_style.css" type = "text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Log In</div>
+<!--            <form action="http://127.0.0.1:5000/login" method="post" class="form-wrapper">-->
+                <input type="text" id="name" placeholder="username" class="input-item">
+                <input type="password" id="pwd" placeholder="password" class="input-item">
+                <input type="button" class = 'btn' onclick="submit()" value="sign in"></input>
+<!--            </form>-->
+            <div class="msg">
+                Don't have an account?
+                <a href="./sign_up.html">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./jquery.min.js"></script>
+    <script>
+        function submit()
+        {
+            name = document.getElementById("name").value;
+            pwd = document.getElementById("pwd").value;
+             if (name == "" || pwd == "")
+            {
+                alert("Please enter both password and name!");
+            }
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/login",
+                data: { "name": name, "pwd":pwd},
+                dataType: "json",
+                success:function (res)
+                {
+                    if (res.name == "None")
+                    {
+                        window.location.href = "./sign_up.html";
+                        alert("Sorry, but you should sign up first.");
+                    }
+                    else if (res.name != name || res.pwd != pwd)
+                    {
+                        window.location.href = "./login.html";
+                        alert("Wrong name or password");
+                    }
+                    else if (res.name == name && res.pwd == pwd)
+                    {
+                        window.location.href = "./get_location.html?"+"name="+name;
+                        alert("Log in successful");
+                    }
+                    else
+                    {
+                        window.location.href = "./login.html";
+                        alert("Unkown situation");
+                    }
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

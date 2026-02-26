@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport2" content="width=device-width, initial-scale=1.0">
+    <title>sign_up</title>
+    <link rel = "stylesheet" href = "./login_style.css" type = "text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Sign Up :)</div>
+<!--            <form action="http://127.0.0.1:5000/sign_up" method="post" class="form-wrapper">-->
+                <input type="text" id="name" placeholder="username" class="input-item">
+                <input type="password" id="pwd" placeholder="password" class="input-item">
+                <label class="msg" for="adult">Are you an adult? </label>
+                    <select name="adult" id="adult">
+                        <option value="false" >false</option>
+                        <option value="true">true</option>
+                    </select>
+                <input class="btn" onclick="submit()" value="sign up"></input>
+            </form>
+            <div class="msg">
+                Have an account?
+                <a href="./login.html">Sign in</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./jquery.min.js"></script>
+    <script>
+
+        function submit() {
+            name = document.getElementById("name").value
+            pwd = document.getElementById("pwd").value
+            adult = document.getElementById("adult").value
+<!--            console.log(adult);-->
+            if (name == "" || pwd == "")
+            {
+                alert("Please enter both password and name!");
+            }
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/sign_up",
+                data: { "name": name, "pwd":pwd, "adult":adult},
+                dataType: "json",
+                success: function (res)
+                {
+                    if (res.msg == "error" )
+                    {
+                        window.location.href = "./sign_up.html";
+                        alert('Sorry, but this name has already been used,please think another one.');
+                    }
+                    else
+                    {
+                        window.location.href = "./login.html";
+                        alert("Sign up successful");
+                    }
+                }
+            });
+            }
+    </script>
+
+
+</body>
+</html>

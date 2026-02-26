@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport2" content="width=device-width, initial-scale=1.0">
+    <title>Edit_Preference</title>
+    <link rel = "stylesheet" href = "./login_style_PC.css" type = "text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Edit Preference</div>
+<!--            <form action="http://127.0.0.1:5000/login" method="post" class="form-wrapper">-->
+                <input type="text" id="name" placeholder="The name of the user that to be edited." class="input-item">
+                <input type="button" class = 'btn' onclick="submit()" value="Edit this record"></input>
+<!--            </form>-->
+        </div>
+    </div>
+
+    <script src="./jquery.min.js"></script>
+    <script>
+        function submit()
+        {
+            name = document.getElementById("name").value;
+            if (name == "")
+            {
+                alert("Please enter the name!");
+            }
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/edit_preference",
+                data: { "name": name},
+                dataType: "json",
+                success:function (res)
+                {
+                    if (res.result == "success")
+                        {
+                        alert("Change successful :)");
+                        }
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>
